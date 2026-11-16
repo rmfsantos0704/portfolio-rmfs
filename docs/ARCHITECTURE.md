@@ -11,7 +11,10 @@ portfolio/
 ├── client/                      # React SPA
 │   ├── index.html
 │   ├── vite.config.ts           # dev proxy: /api -> http://localhost:5000
-│   ├── public/certificates/     # certificate images: <slug>.png (add yours here)
+│   ├── public/                  # static files served as-is:
+│   │   ├── certificates/        #   <slug>.png certificate images
+│   │   ├── logos/               #   project logos (bataeno-pass.png, snowed.png, ...)
+│   │   └── BataenoPass/ SnowEd/ TatAI/ lox-cli/   # project screenshots
 │   └── src/
 │       ├── main.tsx             # providers + CSS entry
 │       ├── App.tsx              # route table
@@ -20,13 +23,14 @@ portfolio/
 │       ├── types/               # shared TS interfaces mirroring API shapes
 │       ├── services/api.ts      # the only place that calls fetch()
 │       ├── hooks/useApi.ts      # loading / error / data wrapper
+│       ├── lib/projectUi.ts     # per-project theme variables, mockup address text
 │       ├── context/             # ProfileContext (fetched once), ThemeContext (light/dark)
-│       ├── pages/               # one file per route
+│       ├── pages/               # one file per route (incl. ProjectDetailPage)
 │       └── components/
 │           ├── layout/          # Layout, Navbar, Footer
 │           ├── common/          # PageView, SectionHeading, Loading/Error states
 │           ├── home/            # ContactStrip
-│           ├── projects/        # ProjectCard, ProjectMockup
+│           ├── projects/        # ProjectCard, DeviceMockup, ScreenshotShowcase
 │           ├── skills/          # SkillsExplorer, SkillDetail, skillMeta
 │           ├── certifications/  # CertificationList, CertificationItem (accordion)
 │           └── ui/              # Icon
@@ -76,7 +80,7 @@ portfolio/
 | GET    | `/api/skills`           | `{ data: Skill[] }` (`?category=` filter) |
 | GET    | `/api/certifications`   | `{ data: Certification[] }`              |
 | GET    | `/api/projects`         | `{ data: Project[] }`                    |
-| GET    | `/api/projects/:slug`   | `{ data: Project }` (used by detail pages later) |
+| GET    | `/api/projects/:slug`   | `{ data: Project }` (project detail page) |
 
 Errors: `{ "error": "message" }` with an appropriate status.
 
@@ -84,7 +88,7 @@ Errors: `{ "error": "message" }` with an appropriate status.
 
 - Dark is the Figma design (`index.css`). Light mode lives in `styles/theme.css` under `:root[data-theme="light"]`: it redefines the colour variables and overrides colours that were hardcoded in the Figma CSS.
 - `data-theme` is set on `<html>` by an inline script in `index.html` before first paint (saved choice in `localStorage`, otherwise the OS preference), so there is no flash. `ThemeContext` keeps it in sync and the navbar `ThemeToggle` flips it.
-- Intentionally the same in both themes: the code card, the project mockup panels and the blue education card.
+- Intentionally the same in both themes: the code card, and the blue education card (project pages follow the toggle with their own palettes).
 - To theme a new component, use the CSS variables (`--ink`, `--paper`, `--blue`, `--line`, `--surface`, `--text-muted`…) instead of hex codes, or add a light override in `theme.css`.
 
 ## 3. Database architecture (MongoDB / Mongoose)
@@ -101,8 +105,8 @@ Four collections; no joins needed. The only cross-reference is `Skill.usedIn[]` 
 `title, slug (unique), issuer, program, description, highlights[], imageUrl, credentialUrl, issuedAt, order`
 
 **projects**
-`slug (unique), name, type, summary, tags[], mockupKey (snowed | owlet | lox), color, githubUrl, liveUrl, detail{overview, problem, features[], techNotes[]}, order`
-The `detail` sub-document is reserved for the project detail pages.
+`slug (unique), name, type, summary, techStack[], deviceType (desktop | mobile | terminal), logo, screenshots[], theme{accent, secondary, highlight, dark{title, backdrop, pageBackground, pageSurface, pageText, pageMuted}, light{...same}}, watermark, role, challenge, solution, sdlc[{phase, description}], liveUrl, githubUrl, order`
+Screenshot and logo values are paths under `client/public` (e.g. `/SnowEd/calendar.jpeg`). `challenge`, `solution`, `sdlc`, `role` are optional; the detail page hides any section that is empty.
 
 ### Why these choices
 - **Slugs as stable keys** — used for URLs (`/projects/:slug`), image filenames, and the skill↔project link, so reordering never breaks anything.
@@ -110,6 +114,10 @@ The `detail` sub-document is reserved for the project detail pages.
 - **Profile as one document** — one read serves nav, footer, home, and about.
 - **Embedded experience/education** — they have no life outside the profile.
 
-## 4. Next phase: project detail pages
+## 4. Project pages
 
-Planned, not built yet: route `/projects/:slug` → `ProjectDetailPage`, fetching `GET /api/projects/:slug`, with per-project mockup galleries; fill `Project.detail` in the seed; switch `ProjectCard`'s link from GitHub to the detail route.
+- `/projects` lists the projects as cards. Each card shows the first screenshot inside a device frame on the project's own backdrop colour.
+- `/projects/:slug` is `ProjectDetailPage`: hero, screenshot slideshow (`ScreenshotShowcase`), challenge/solution, optional process timeline, tech stack, previous/next project.
+- **Mockups:** `DeviceMockup` wraps a screenshot in a browser (`desktop`), phone (`mobile`) or terminal (`terminal`) frame. A missing image shows a "Screenshot coming soon" placeholder, so a page works before its files exist.
+- **Per-project colours:** `themeVars()` (lib/projectUi.ts) turns `Project.theme` into `--pd-*` CSS variables on the page wrapper; the styles in `styles/project-detail.css` only use those variables, `theme.dark` or `theme.light` is picked from the site's current mode (`useTheme()`), so each project has its own dark and light palette and switches live with the toggle. Old flat themes are copied to both modes by `normalizeTheme()` in `services/api.ts`. Button text colour is chosen automatically for contrast.
+- **Adding a project:** add an entry to `projects` in `server/src/seed/data.js`, put its images in `client/public/<Folder>/`, run `npm run seed`.
