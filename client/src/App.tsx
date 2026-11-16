@@ -2,6 +2,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { Layout } from "./components/layout/Layout";
 import HomePage from "./pages/HomePage";
 import ProjectsPage from "./pages/ProjectsPage";
+import ProjectDetailPage from "./pages/ProjectDetailPage";
 import AboutPage from "./pages/AboutPage";
 import SkillsPage from "./pages/SkillsPage";
 import CertificationsPage from "./pages/CertificationsPage";
@@ -13,7 +14,7 @@ export default function App() {
       <Route element={<Layout />}>
         <Route index element={<HomePage />} />
         <Route path="projects" element={<ProjectsPage />} />
-        {/* Project detail pages (/projects/:slug) come in the projects phase. */}
+        <Route path="projects/:slug" element={<ProjectDetailPage />} />
         <Route path="about" element={<AboutPage />} />
         <Route path="skills" element={<SkillsPage />} />
         <Route path="certifications" element={<CertificationsPage />} />

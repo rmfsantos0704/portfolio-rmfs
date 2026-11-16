@@ -33,7 +33,7 @@ export function SkillDetail({ skill, projects }: SkillDetailProps) {
         {usedIn.length > 0 ? (
           <div className="skill-used-list">
             {usedIn.map((project) => (
-              <Link key={project.slug} to="/projects">
+              <Link key={project.slug} to={`/projects/${project.slug}`}>
                 {project.name} <Icon name="arrow" size={14} />
               </Link>
             ))}

@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { Icon } from "../ui/Icon";
+import { Brand } from "../ui/Brand";
 import { ThemeToggle } from "../ui/ThemeToggle";
 import { useProfile } from "../../context/ProfileContext";
 
@@ -18,9 +19,7 @@ export function Navbar() {
 
   return (
     <header className="nav-wrap">
-      <Link className="brand" to="/" onClick={close} aria-label="Russel Santos, home">
-        RS<span>.</span>
-      </Link>
+      <Brand onNavigate={close} />
       <nav className={open ? "nav-links open" : "nav-links"} aria-label="Primary navigation">
         {links.map((link) => (
           <NavLink key={link.to} to={link.to} onClick={close}>

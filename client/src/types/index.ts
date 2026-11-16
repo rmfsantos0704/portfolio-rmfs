@@ -53,16 +53,49 @@ export interface Certification {
   order: number;
 }
 
+export type DeviceType = "desktop" | "mobile" | "terminal";
+
+/** Page colours for one site mode. */
+export interface ProjectPalette {
+  title: string;
+  /** Background of the mockup panels (card + screenshot stage). */
+  backdrop: string;
+  pageBackground: string;
+  pageSurface: string;
+  pageText: string;
+  pageMuted: string;
+}
+
+export interface ProjectTheme {
+  accent: string;
+  secondary?: string;
+  highlight?: string;
+  dark: ProjectPalette;
+  light: ProjectPalette;
+}
+
+export interface SdlcPhase {
+  phase: string;
+  description: string;
+}
+
 export interface Project {
   _id: string;
   slug: string;
   name: string;
   type: string;
   summary: string;
-  tags: string[];
-  mockupKey: "snowed" | "owlet" | "lox";
-  color: "blue" | "orange" | "lime";
-  githubUrl?: string;
+  techStack: string[];
+  deviceType: DeviceType;
+  logo?: string;
+  screenshots: string[];
+  theme: ProjectTheme;
+  watermark?: string;
+  role?: string;
+  challenge?: string;
+  solution?: string;
+  sdlc: SdlcPhase[];
   liveUrl?: string;
+  githubUrl?: string;
   order: number;
 }

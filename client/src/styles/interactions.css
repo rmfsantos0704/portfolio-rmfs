@@ -1,0 +1,253 @@
+/* ------------------------------------------------------------------
+   Interactions: theme-switch animation + interactive "RS." logo
+   ------------------------------------------------------------------ */
+
+/* ---- Theme switch (View Transitions API) --------------------------
+   ThemeContext sets --vt-x / --vt-y / --vt-r (button centre and the radius
+   needed to cover the screen) and data-theme-anim before the switch. The
+   animation is pure CSS so it starts in the same frame as the transition.
+   Change the speed here: */
+:root {
+  --theme-anim-duration: 0.8s;
+}
+
+/* Turn off the browser's default cross-fade; the rules below replace it. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+@keyframes vt-reveal {
+  from {
+    clip-path: circle(0px at var(--vt-x, 50%) var(--vt-y, 0px));
+  }
+  to {
+    clip-path: circle(var(--vt-r, 150vmax) at var(--vt-x, 50%) var(--vt-y, 0px));
+  }
+}
+@keyframes vt-collapse {
+  from {
+    clip-path: circle(var(--vt-r, 150vmax) at var(--vt-x, 50%) var(--vt-y, 0px));
+  }
+  to {
+    clip-path: circle(0px at var(--vt-x, 50%) var(--vt-y, 0px));
+  }
+}
+@keyframes vt-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Dark -> light: the new (light) page is on top and grows out of the button. */
+:root[data-theme-anim="to-light"]::view-transition-new(root) {
+  animation: vt-reveal var(--theme-anim-duration) cubic-bezier(0.65, 0, 0.25, 1) both;
+}
+/* Light -> dark: the old (light) page sits on top and is pulled back into the button. */
+:root[data-theme-anim="to-dark"]::view-transition-old(root) {
+  z-index: 2;
+  animation: vt-collapse var(--theme-anim-duration) cubic-bezier(0.65, 0, 0.25, 1) both;
+}
+:root[data-theme-anim="to-dark"]::view-transition-new(root) {
+  z-index: 1;
+}
+/* Reduced motion: a short fade instead of the moving circle. */
+:root[data-theme-anim="fade"]::view-transition-new(root) {
+  animation: vt-fade-in 0.2s ease both;
+}
+
+/* Stop ordinary hover/colour transitions from showing mid-switch. */
+:root.theme-switching *,
+:root.theme-switching *::before,
+:root.theme-switching *::after {
+  transition: none !important;
+}
+
+.theme-toggle {
+  position: relative;
+  overflow: hidden;
+}
+.theme-toggle:active {
+  transform: scale(0.92);
+}
+.theme-icon {
+  display: grid;
+  place-items: center;
+  animation: theme-icon-in 0.6s cubic-bezier(0.2, 0.9, 0.3, 1.2) both;
+}
+@keyframes theme-icon-in {
+  from {
+    transform: rotate(-120deg) scale(0.3);
+    opacity: 0;
+  }
+  to {
+    transform: rotate(0) scale(1);
+    opacity: 1;
+  }
+}
+
+/* ---- Interactive "RS." logo ------------------------------------- */
+.brand.brand-interactive {
+  position: relative;
+  display: inline-flex;
+  align-items: baseline;
+  cursor: pointer;
+  /* undo the Figma rule that turns every span inside .brand blue */
+}
+.brand.brand-interactive span {
+  color: inherit;
+}
+.brand-mark {
+  display: inline-flex;
+  align-items: baseline;
+  white-space: nowrap;
+}
+.brand-letter {
+  display: inline-block;
+  transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.3);
+}
+
+/* Hidden letters that unfold on hover/focus: "R[ussel] S[antos]" */
+.brand-more {
+  display: inline-block;
+  max-width: 0;
+  overflow: hidden;
+  opacity: 0;
+  letter-spacing: -0.5px;
+  font-weight: 700;
+  transform: translateY(6px);
+  transition:
+    max-width 0.45s cubic-bezier(0.2, 0.8, 0.2, 1),
+    opacity 0.3s,
+    transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+/* The space between "Russel" and "Santos" opens up with the name */
+.brand-more + .brand-letter {
+  margin-left: 0;
+  transition:
+    transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.3),
+    margin-left 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* The dot is a real circle so it can pulse and bounce. */
+.brand.brand-interactive .brand-dot {
+  position: relative;
+  display: inline-block;
+  width: 0.2em;
+  height: 0.2em;
+  margin-left: 0.06em;
+  border-radius: 50%;
+  background: var(--blue);
+  animation: brand-pulse 2.8s ease-out infinite;
+}
+@keyframes brand-pulse {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--blue) 75%, transparent);
+  }
+  60%,
+  100% {
+    box-shadow: 0 0 0 0.6em transparent;
+  }
+}
+
+/* Small "Home" hint under the logo */
+.brand-hint {
+  position: absolute;
+  left: 0;
+  top: calc(100% + 6px);
+  padding: 4px 8px;
+  background: var(--blue);
+  color: #fff;
+  font: 500 9px "DM Mono", monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition:
+    opacity 0.2s,
+    transform 0.25s;
+}
+.brand.brand-interactive .brand-hint {
+  color: #fff;
+}
+
+/* Hover only where hover exists; keyboard focus works everywhere. */
+@media (hover: hover) {
+  .brand.brand-interactive:hover .brand-more {
+    max-width: 3.2em;
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .brand.brand-interactive:hover .brand-more + .brand-letter {
+    margin-left: 0.3em;
+  }
+  .brand.brand-interactive:hover .brand-dot {
+    animation: none;
+    transform: scale(1.25);
+    transition: transform 0.25s;
+  }
+  .brand.brand-interactive:hover .brand-hint {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .brand.brand-interactive:hover .brand-letter {
+    transform: translateY(-2px);
+  }
+}
+.brand.brand-interactive:focus-visible .brand-more {
+  max-width: 3.2em;
+  opacity: 1;
+  transform: translateY(0);
+}
+.brand.brand-interactive:focus-visible .brand-more + .brand-letter {
+  margin-left: 0.3em;
+}
+.brand.brand-interactive:focus-visible .brand-hint {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Click: the dot bounces */
+.brand.brand-interactive.popping .brand-dot {
+  animation: brand-pop 0.55s cubic-bezier(0.2, 0.9, 0.3, 1.4);
+}
+@keyframes brand-pop {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  35% {
+    transform: translateY(-0.55em) scale(1.3);
+  }
+  70% {
+    transform: translateY(0) scale(0.85, 1.15);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Keep the expanded logo from crowding the buttons on small phones */
+@media (max-width: 400px) {
+  .brand-hint {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand.brand-interactive .brand-dot {
+    animation: none;
+  }
+  .brand-more,
+  .brand-letter,
+  .brand-hint,
+  .theme-icon {
+    transition: none;
+    animation: none;
+  }
+}

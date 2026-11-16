@@ -10,6 +10,8 @@ import "./styles/skills.css";
 import "./styles/certifications.css";
 // Must stay last: light-mode overrides rely on loading after the base styles.
 import "./styles/theme.css";
+import "./styles/interactions.css";
+import "./styles/project-detail.css";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
