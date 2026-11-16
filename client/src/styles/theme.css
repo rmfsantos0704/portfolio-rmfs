@@ -1,0 +1,278 @@
+/* ------------------------------------------------------------------
+   Theming
+   Dark is the Figma design and lives in index.css (:root variables).
+   Light mode = new variable values + overrides for the colours that
+   were hardcoded in the Figma CSS. Dark rendering is left untouched.
+   ------------------------------------------------------------------ */
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --ink: #0b1328;
+  --paper: #f6f8ff;
+  --cream: #eaf0ff;
+  --blue: #2c5fe6;
+  --orange: #1b4ed1;
+  --forest: #e7edff;
+  --line: rgba(44, 95, 230, 0.2);
+
+  /* Extra tokens used by the overrides below */
+  --surface: #ffffff;
+  --surface-alt: #eef2ff;
+  --border-soft: rgba(44, 95, 230, 0.18);
+  --text-muted: #4a5670;
+  --text-faint: #5d6a86;
+  --rule: #cfd9f0;
+}
+
+body {
+  transition:
+    background-color 0.25s,
+    color 0.25s;
+}
+
+/* ---- Navbar: theme toggle ---------------------------------------- */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.nav-links {
+  margin-left: auto;
+  margin-right: 28px;
+}
+.theme-toggle {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  transition:
+    background 0.2s,
+    color 0.2s,
+    border-color 0.2s;
+}
+.theme-toggle:hover {
+  background: var(--blue);
+  border-color: var(--blue);
+  color: #fff;
+}
+
+@media (max-width: 900px) {
+  /* The mobile menu is a fixed dropdown, so drop the desktop spacing. */
+  .nav-links {
+    margin: 0;
+  }
+}
+
+/* ---- Light mode overrides ---------------------------------------- */
+
+/* Home */
+:root[data-theme="light"] .hero-intro,
+:root[data-theme="light"] .section-heading > p {
+  color: var(--text-muted);
+}
+:root[data-theme="light"] .floating-tag {
+  background: var(--surface);
+  border-color: var(--border-soft);
+  box-shadow: 0 8px 28px rgba(44, 95, 230, 0.14);
+}
+:root[data-theme="light"] .contact-strip small {
+  color: var(--text-faint);
+}
+:root[data-theme="light"] .orbit {
+  border-color: rgba(44, 95, 230, 0.28);
+}
+:root[data-theme="light"] .status-dot {
+  background: var(--blue);
+}
+
+/* Projects (the coloured mockup panels stay deep blue in both themes) */
+:root[data-theme="light"] .project-card {
+  background: var(--surface);
+  border-color: var(--border-soft);
+  box-shadow: 0 10px 40px rgba(44, 95, 230, 0.08);
+}
+:root[data-theme="light"] .project-info > p {
+  color: var(--text-muted);
+}
+.project-number {
+  color: #f4f7ff;
+}
+
+/* About */
+:root[data-theme="light"] .about-section {
+  color: var(--ink);
+}
+:root[data-theme="light"] .about-title h2 em,
+:root[data-theme="light"] .kicker.light {
+  color: var(--blue);
+}
+:root[data-theme="light"] .about-copy p {
+  color: var(--text-muted);
+}
+:root[data-theme="light"] .about-copy .large {
+  color: var(--ink);
+}
+:root[data-theme="light"] .experience-card {
+  background: var(--surface);
+  border-color: var(--border-soft);
+  box-shadow: 0 10px 40px rgba(44, 95, 230, 0.08);
+}
+:root[data-theme="light"] .experience-top {
+  color: var(--text-faint);
+}
+:root[data-theme="light"] .experience-card p {
+  color: var(--text-muted);
+}
+/* Education card is a solid blue block: keep its text white in both themes. */
+.education-card {
+  color: #fff;
+}
+
+/* Skills */
+:root[data-theme="light"] .filter-pill {
+  color: var(--text-muted);
+}
+:root[data-theme="light"] .filter-pill span {
+  color: var(--text-faint);
+}
+:root[data-theme="light"] .filter-pill.active {
+  color: #fff;
+}
+:root[data-theme="light"] .filter-pill.active span {
+  color: rgba(255, 255, 255, 0.75);
+}
+:root[data-theme="light"] .skill-chip {
+  background: var(--surface);
+  border-color: var(--border-soft);
+}
+:root[data-theme="light"] .skill-chip:hover {
+  border-color: rgba(44, 95, 230, 0.55);
+}
+:root[data-theme="light"] .skill-chip.active {
+  background: #dfe8ff;
+  border-color: var(--blue);
+}
+:root[data-theme="light"] .skill-chip-dots i,
+:root[data-theme="light"] .level-bars span {
+  background: #d3dcf3;
+}
+:root[data-theme="light"] .skill-chip-dots i.on {
+  background: var(--blue);
+}
+:root[data-theme="light"] .level-bars span.on {
+  background: var(--blue);
+}
+:root[data-theme="light"] .skill-detail {
+  background: var(--surface);
+  border-color: var(--border-soft);
+  box-shadow: 14px 14px 0 rgba(44, 95, 230, 0.1);
+}
+:root[data-theme="light"] .skill-detail > p {
+  color: var(--text-muted);
+}
+:root[data-theme="light"] .level-meter strong {
+  color: var(--blue);
+}
+:root[data-theme="light"] .skill-used .mini-label,
+:root[data-theme="light"] .skill-used small {
+  color: var(--text-faint);
+}
+:root[data-theme="light"] .skill-used-list a {
+  background: var(--surface-alt);
+  color: #1b3a8a;
+}
+:root[data-theme="light"] .skill-used-list a:hover {
+  background: var(--blue);
+  color: #fff;
+}
+
+/* Certifications */
+:root[data-theme="light"] .credentials-section {
+  background: #eef2ff;
+  color: var(--ink);
+}
+:root[data-theme="light"] .cert-badge {
+  border-color: rgba(44, 95, 230, 0.4);
+  color: var(--blue);
+}
+:root[data-theme="light"] .cert-badge small {
+  color: var(--text-faint);
+}
+:root[data-theme="light"] .cert-list {
+  border-top-color: var(--rule);
+}
+:root[data-theme="light"] .cert-item {
+  border-bottom-color: var(--rule);
+}
+:root[data-theme="light"] .cert-item.open,
+:root[data-theme="light"] .cert-item:hover {
+  background: rgba(44, 95, 230, 0.05);
+}
+:root[data-theme="light"] .cert-index,
+:root[data-theme="light"] .cert-chevron,
+:root[data-theme="light"] .cert-item.open .cert-title,
+:root[data-theme="light"] .cert-details li svg {
+  color: var(--blue);
+}
+:root[data-theme="light"] .cert-issuer {
+  color: var(--text-faint);
+}
+:root[data-theme="light"] .cert-image,
+:root[data-theme="light"] .cert-placeholder {
+  background: var(--surface);
+  border-color: rgba(44, 95, 230, 0.3);
+  box-shadow: 12px 12px 0 rgba(44, 95, 230, 0.12);
+}
+:root[data-theme="light"] .cert-placeholder {
+  color: #7d95d6;
+}
+:root[data-theme="light"] .cert-placeholder strong {
+  color: #4d69b3;
+}
+:root[data-theme="light"] .cert-placeholder small,
+:root[data-theme="light"] .cert-placeholder code {
+  color: var(--text-faint);
+}
+:root[data-theme="light"] .cert-details > p {
+  color: var(--text-muted);
+}
+:root[data-theme="light"] .cert-details li {
+  color: #25365f;
+}
+
+/* Footer */
+:root[data-theme="light"] .compact-footer .footer-inner > p:not(.copyright),
+:root[data-theme="light"] .copyright {
+  color: var(--text-faint);
+}
+
+/* Loading / error states */
+:root[data-theme="light"] .async-state {
+  color: var(--text-muted);
+}
+:root[data-theme="light"] .async-state.error {
+  border-color: rgba(200, 50, 50, 0.35);
+  background: rgba(220, 60, 60, 0.06);
+  color: #8a1c1c;
+}
+:root[data-theme="light"] .async-state.error small {
+  color: #8c6a6a;
+}
+
+:root[data-theme="light"] ::selection {
+  background: #bfd0ff;
+  color: var(--ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body {
+    transition: none;
+  }
+}
