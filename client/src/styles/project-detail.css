@@ -69,8 +69,8 @@
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: top center;
+  object-fit: contain; /* show the whole screenshot, never crop or zoom */
+  object-position: center;
 }
 
 .device-mobile {
@@ -398,6 +398,55 @@
 .pd-slide.slide-mobile {
   max-width: 290px;
 }
+.pd-zoom {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: zoom-in;
+}
+.pd-zoom:focus-visible {
+  outline: 2px solid var(--pd-accent);
+  outline-offset: 4px;
+}
+.pd-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(3, 6, 12, 0.92);
+  cursor: zoom-out;
+  animation: pd-slide-in 0.25s ease both;
+}
+.pd-lightbox img {
+  display: block;
+  max-width: min(96vw, 1920px);
+  max-height: 92vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  background: #0b0f1a;
+  border-radius: 8px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+  cursor: default;
+}
+.pd-lightbox-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+  background: #f4f7ff;
+  color: #05070b;
+  font-size: 28px;
+  line-height: 1;
+}
 @keyframes pd-slide-in {
   from {
     opacity: 0;
@@ -489,14 +538,46 @@
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: top center;
+  object-fit: contain;
+  object-position: center;
 }
 .pd-thumb-fallback {
   display: block;
   width: 100%;
   height: 100%;
   background: color-mix(in srgb, var(--pd-accent) 30%, transparent);
+}
+
+/* Desktop / Mobile switch above the stage */
+.pd-modes {
+  display: inline-flex;
+  gap: 4px;
+  padding: 4px;
+  margin-bottom: 20px;
+  border: 1px solid color-mix(in srgb, var(--pd-on-backdrop) 25%, transparent);
+  border-radius: 999px;
+}
+.pd-mode {
+  padding: 9px 18px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: inherit;
+  font: 500 11px "DM Mono", monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.7;
+  transition:
+    opacity 0.2s,
+    background 0.2s;
+}
+.pd-mode:hover {
+  opacity: 1;
+}
+.pd-mode[aria-pressed="true"] {
+  background: var(--pd-accent);
+  color: var(--pd-on-accent);
+  opacity: 1;
 }
 
 /* Challenge / solution */
@@ -698,6 +779,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .pd-slide,
+  .pd-lightbox,
   .page-project {
     animation: none;
   }

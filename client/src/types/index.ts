@@ -53,7 +53,7 @@ export interface Certification {
   order: number;
 }
 
-export type DeviceType = "desktop" | "mobile" | "terminal";
+export type DeviceType = "desktop" | "mobile" | "terminal" ;
 
 /** Page colours for one site mode. */
 export interface ProjectPalette {
@@ -89,6 +89,8 @@ export interface Project {
   deviceType: DeviceType;
   logo?: string;
   screenshots: string[];
+  /** Optional phone screenshots, shown in a phone frame behind a Desktop / Mobile switch. */
+  mobileScreenshots?: string[];
   theme: ProjectTheme;
   watermark?: string;
   role?: string;

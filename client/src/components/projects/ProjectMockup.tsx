@@ -77,13 +77,29 @@ function LoxMockup() {
   );
 }
 
-const mockups: Record<Project["mockupKey"], () => React.JSX.Element> = {
+/** CSS-drawn placeholders, used only when a project has no screenshots yet. */
+const fallbacks: Record<string, () => React.JSX.Element> = {
   snowed: SnowEdMockup,
   owlet: OwletMockup,
   lox: LoxMockup,
 };
 
-export function ProjectMockup({ mockupKey }: { mockupKey: Project["mockupKey"] }) {
-  const Mockup = mockups[mockupKey];
-  return <Mockup />;
+export function ProjectMockup({ project }: { project: Project }) {
+  const { slug, name, deviceType, screenshots } = project;
+
+  // Real screenshots first. Sizes: desktop/terminal 1920×1200 (16:10), mobile 1080×2340 (9:19.5).
+  if (screenshots.length > 0) {
+    return (
+      <img
+        className={`mockup-shot mockup-shot--${deviceType}`}
+        src={screenshots[0]}
+        alt={`${name} screenshot`}
+        loading="lazy"
+        decoding="async"
+      />
+    );
+  }
+
+  const Fallback = fallbacks[slug];
+  return Fallback ? <Fallback /> : null;
 }

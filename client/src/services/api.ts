@@ -41,6 +41,7 @@ function normalizeProject(project: Project): Project {
     theme: normalizeTheme(project.theme),
     techStack: project.techStack ?? [],
     screenshots: project.screenshots ?? [],
+    mobileScreenshots: project.mobileScreenshots ?? [],
     sdlc: project.sdlc ?? [],
   };
 }

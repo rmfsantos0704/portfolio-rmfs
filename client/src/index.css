@@ -491,6 +491,25 @@ h1 em,
 .project-visual.lime {
   background: #173b91;
 }
+/* Real project screenshots: scaled uniformly (never stretched), ratios match the exported images */
+.mockup-shot {
+  display: block;
+  object-fit: contain;
+  box-shadow: 14px 15px 0 rgba(57, 113, 255, 0.3);
+}
+.mockup-shot--desktop,
+.mockup-shot--terminal {
+  width: min(86%, 640px);
+  height: auto;
+  aspect-ratio: 16 / 10; /* 1920×1200 */
+  border-radius: 6px;
+}
+.mockup-shot--mobile {
+  height: 400px;
+  width: auto;
+  aspect-ratio: 9 / 19.5; /* 1080×2340 */
+  border-radius: 22px;
+}
 .project-number {
   position: absolute;
   top: 25px;
@@ -1130,6 +1149,13 @@ footer {
   }
   .project-visual {
     min-height: 330px;
+  }
+  .mockup-shot--mobile {
+    height: 300px;
+  }
+  .mockup-shot--desktop,
+  .mockup-shot--terminal {
+    width: 88%;
   }
   .project-info {
     min-height: 390px;
