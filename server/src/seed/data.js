@@ -133,54 +133,7 @@ export const projects = [
     ],
     order: 2,
   },
-  {
-    slug: "tatai",
-    name: "TatAI",
-    type: "Quality assurance • NLP assistant",
-    summary:
-      "An intelligent home assistant powered by Natural Language Processing (NLP) and a rule-based algorithm. I served as QA, testing the assistant's responses and behavior rather than writing its core code.",
-    techStack: ["Manual QA", "Test Case Design", "NLP Testing", "Bug Tracking"],
-    deviceType: "desktop",
-    logo: "/logos/tatai.png",
-    watermark: "QA",
-    role: "Quality Assurance",
-    theme: {
-      accent: "#0758df",
-      secondary: "#24c768",
-      highlight: "#f2f2ed",
-      dark: {
-        title: "#6aa8ff",
-        backdrop: "#0b0f14",
-        pageBackground: "#0f1318",
-        pageSurface: "#181e26",
-        pageText: "#f2f2ed",
-        pageMuted: "#9aa6b2",
-      },
-      light: {
-        title: "#0758df",
-        backdrop: "#e5e5df",
-        pageBackground: "#e5e5df",
-        pageSurface: "#f8f8f4",
-        pageText: "#17212b",
-        pageMuted: "#53616b",
-      },
-    },
-    githubUrl: "https://github.com/SubiCodes/TatAI",
-    challenge:
-      "As an NLP-driven home assistant, TatAI needed to reliably interpret varied phrasing and edge-case commands without breaking or misfiring rule-based responses.",
-    solution:
-      "Acted as Quality Assurance for the project — designing test cases, running functional and regression testing on NLP command handling, and reporting bugs and inconsistent behavior back to the development team.",
-    screenshots: [
-      "/TatAI/screenshot-1.png",
-      "/TatAI/screenshot-2.png",
-      "/TatAI/screenshot-3.png",
-      "/TatAI/screenshot-4.png",
-      "/TatAI/screenshot-5.png",
-      "/TatAI/screenshot-6.png",
-      "/TatAI/screenshot-7.png",
-    ],
-    order: 3,
-  },
+
   {
     slug: "lox",
     name: "LOX",
@@ -237,15 +190,13 @@ export const projects = [
     ],
     order: 4,
   },
-  {
-    // Kept from the earlier portfolio. It has no challenge/solution/screenshots yet,
-    // so its detail page shows placeholders until you add them (or delete this entry).
+    {
     slug: "owlet",
     name: "Owlet",
-    type: "Research platform",
+    type: "Web app • Research platform",
     summary:
-      "A collaborative research workspace for clipping, citing, and verifying evidence—with semantic search and AI-assisted briefs.",
-    techStack: ["React", "Node.js", "MongoDB", "AI"],
+      "A research workspace for students and researchers. Clip web pages and PDFs into collections, highlight passages on the original PDF, keep citations next to every source, and share collections with classmates. Includes a Chrome extension and optional AI tools.",
+    techStack: ["React", "TypeScript", "Node.js", "MongoDB", "Chrome Extension", "PWA"],
     deviceType: "desktop",
     logo: "/logos/owlet.png",
     watermark: "OWLET",
@@ -270,8 +221,31 @@ export const projects = [
         pageMuted: "#4a5670",
       },
     },
+    liveUrl: "https://owlet-nine.vercel.app/",
     githubUrl: "https://github.com/rmfsantos0704",
-    screenshots: [],
+    challenge:
+      "Research ends up scattered across open tabs, downloaded PDFs, and separate notes and citation tools, which makes it hard to find a passage again or work on sources with a group.",
+    solution:
+      "Built a full-stack app with a Chrome extension and an installable web app. Pages and PDFs go into shared collections with roles and join links. PDFs open in an in-app reader where highlights are drawn directly on the original page. Every source gets APA, MLA and Chicago citations. An evidence board, a literature matrix and cited research briefs help turn sources into writing. AI summaries, briefs and concept search are optional, have a daily limit per account, and each user can switch them off.",
+    screenshots: [
+      "/Owlet/Screenshot 2026-11-17 104440.png", // Library
+      "/Owlet/Screenshot 2026-11-17 104448.png", // Literature matrix
+      "/Owlet/Screenshot 2026-11-17 104456.png", // Research briefs
+      "/Owlet/Screenshot 2026-11-17 104501.png", // Evidence board
+      "/Owlet/Screenshot 2026-11-17 104507.png", // Highlights
+      "/Owlet/Screenshot 2026-11-17 104513.png", // Comments
+    ],
+    // phone screenshots: shown in a phone frame instead of the browser window (needs the small change below)
+    mobileScreenshots: [
+      "/Owlet/1c33038d-1832-4063-89de-5b4161ad52d4.jpeg", // PDF reader: selecting text to highlight
+      "/Owlet/cbdf7747-9237-4645-a3dc-e3bdfc2a661c.jpeg", // PDF reader: highlights and the selection bar
+      "/Owlet/88cc014d-574e-44fb-bd61-c3c2ac4e06a8.jpeg", // Library
+      "/Owlet/24abe0a7-09c3-4e2a-918a-c4c4f36f9ea3.jpeg", // Literature matrix
+      "/Owlet/6964f698-6a90-40d8-9a53-3cd3000a8aac.jpeg", // Research briefs
+      "/Owlet/fb1f58a0-ca4b-4180-9971-973c114eaad8.jpeg", // Evidence board
+      "/Owlet/a6195bc6-8f96-4769-8bbf-3d21ef59c5e2.jpeg", // AI workspace
+      "/Owlet/aff2b546-19e8-4dd9-99ec-a6918c45dcb4.jpeg", // Concept search
+    ],
     order: 5,
   },
 ];

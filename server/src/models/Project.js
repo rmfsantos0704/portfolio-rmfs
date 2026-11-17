@@ -48,6 +48,7 @@ const projectSchema = new mongoose.Schema(
     // Files live in client/public — e.g. /logos/snowed.png and /SnowEd/calendar.jpeg
     logo: String,
     screenshots: { type: [String], default: [] },
+    mobileScreenshots: { type: [String], default: [] },
     theme: { type: themeSchema, required: true },
     watermark: String,
 
