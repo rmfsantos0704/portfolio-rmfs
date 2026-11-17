@@ -9,7 +9,8 @@ import { errorHandler, notFound } from "./middleware/errorHandler.js";
 export function createApp() {
   const app = express();
 
-  app.use(helmet());
+  // The API is called from a different origin (the client site), so allow cross-origin reads.
+  app.use(helmet({ crossOriginResourcePolicy: { policy: "cross-origin" } }));
   app.use(cors({ origin: env.clientOrigins }));
   app.use(express.json());
   if (env.nodeEnv !== "test") app.use(morgan(env.nodeEnv === "production" ? "combined" : "dev"));
