@@ -8,8 +8,8 @@ export function Footer() {
   return (
     <footer className="compact-footer">
       <div className="footer-inner">
-        <Link className="brand footer-brand" to="/">
-          RS<span>.</span>
+        <Link className="brand footer-brand" to="/" aria-label="Russel Santos, home">
+          <span className="brand-logo" aria-hidden="true" />
         </Link>
         <p>Full-stack developer · Orani, Bataan, Philippines</p>
         <div className="socials">

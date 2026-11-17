@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { PageView } from "../components/common/PageView";
 import { ContactStrip } from "../components/home/ContactStrip";
+import { CopyButton } from "../components/ui/CopyButton";
 import { Icon } from "../components/ui/Icon";
 import { useProfile } from "../context/ProfileContext";
 
@@ -15,7 +16,10 @@ export default function HomePage() {
             <span className="status-dot" /> {profile?.availability ?? "Available for opportunities"}
           </div>
           <h1>
-            I build software that feels <em>simple.</em>
+            <span className="hero-line">Software designed</span>
+            <span className="hero-line">
+              for the <em>real world.</em>
+            </span>
           </h1>
           <p className="hero-intro">
             I’m <strong>Russel Santos</strong>, a full-stack developer turning complex ideas into
@@ -25,9 +29,11 @@ export default function HomePage() {
             <Link className="button primary" to="/projects">
               Explore my work <Icon name="arrow" />
             </Link>
-            <a className="text-link" href={`mailto:${profile?.email ?? ""}`}>
-              Start a conversation
-            </a>
+            {profile?.email && (
+              <CopyButton className="text-link" text={profile.email} label="Copy email address" copiedLabel="Email copied">
+                Start a conversation
+              </CopyButton>
+            )}
           </div>
         </div>
 

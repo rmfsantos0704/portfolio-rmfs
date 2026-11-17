@@ -1,26 +1,25 @@
+import { CopyButton } from "../ui/CopyButton";
 import { Icon } from "../ui/Icon";
 import type { Profile } from "../../types";
 
 export function ContactStrip({ profile }: { profile: Profile }) {
-  const phoneHref = profile.phone ? `tel:${profile.phone.replace(/\s/g, "")}` : undefined;
-
   return (
     <div className="contact-strip" aria-label="Contact information">
-      <a href={`mailto:${profile.email}`}>
+      <CopyButton text={profile.email} label="Copy email address" copiedLabel="Email copied">
         <Icon name="mail" size={17} />
         <span>
           <small>Email</small>
           {profile.email}
         </span>
-      </a>
+      </CopyButton>
       {profile.phone && (
-        <a href={phoneHref}>
+        <CopyButton text={profile.phone} label="Copy phone number" copiedLabel="Number copied">
           <Icon name="phone" size={17} />
           <span>
             <small>Phone</small>
             {profile.phone}
           </span>
-        </a>
+        </CopyButton>
       )}
       {profile.socials.linkedin && (
         <a href={profile.socials.linkedin} target="_blank" rel="noreferrer">

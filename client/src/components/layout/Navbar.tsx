@@ -2,6 +2,7 @@ import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Icon } from "../ui/Icon";
 import { Brand } from "../ui/Brand";
+import { CopyButton } from "../ui/CopyButton";
 import { ThemeToggle } from "../ui/ThemeToggle";
 import { useProfile } from "../../context/ProfileContext";
 
@@ -26,9 +27,11 @@ export function Navbar() {
             {link.label}
           </NavLink>
         ))}
-        <a className="nav-contact" href={`mailto:${profile?.email ?? ""}`}>
-          Let’s talk <Icon name="arrow" size={17} />
-        </a>
+        {profile?.email && (
+          <CopyButton className="nav-contact" text={profile.email} label="Copy email address" copiedLabel="Email copied">
+            Let’s talk <Icon name="arrow" size={17} />
+          </CopyButton>
+        )}
       </nav>
       <div className="nav-actions">
         <ThemeToggle />

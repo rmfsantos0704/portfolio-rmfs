@@ -2,9 +2,9 @@ import { useState, type MouseEvent } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 /**
- * The "RS." logo. It invites interaction in three ways:
+ * The RS logo mark. It invites interaction in three ways:
  *  - the dot gives off a slow pulse,
- *  - hovering / focusing expands it to "Russel Santos." and shows a "Home" hint,
+ *  - hovering / focusing reveals the name "Russel Santos" and shows a "Home" hint,
  *  - clicking bounces the dot and takes you home (or back to the top if you're already there).
  */
 export function Brand({ onNavigate }: { onNavigate?: () => void }) {
@@ -28,10 +28,8 @@ export function Brand({ onNavigate }: { onNavigate?: () => void }) {
       aria-label="Russel Santos, home"
     >
       <span className="brand-mark" aria-hidden="true">
-        <span className="brand-letter">R</span>
-        <span className="brand-more">ussel</span>
-        <span className="brand-letter">S</span>
-        <span className="brand-more">antos</span>
+        <span className="brand-logo" />
+        <span className="brand-more">Russel Santos</span>
         <span className="brand-dot" onAnimationEnd={() => setPopping(false)} />
       </span>
       <span className="brand-hint" aria-hidden="true">

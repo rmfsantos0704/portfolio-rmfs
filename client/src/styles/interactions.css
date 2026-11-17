@@ -103,34 +103,46 @@
 }
 .brand-mark {
   display: inline-flex;
-  align-items: baseline;
+  align-items: center;
   white-space: nowrap;
 }
-.brand-letter {
-  display: inline-block;
-  transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.3);
+.brand.brand-interactive {
+  align-items: center;
 }
 
-/* Hidden letters that unfold on hover/focus: "R[ussel] S[antos]" */
+/* The official RS mark. It is a mask, so it takes the text colour in light and dark mode. */
+.brand-logo {
+  display: inline-block;
+  height: 1.45em;
+  aspect-ratio: 1400 / 1219;
+  background-color: currentColor;
+  -webkit-mask: url("/logo-mark.png") center / contain no-repeat;
+  mask: url("/logo-mark.png") center / contain no-repeat;
+  transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.3);
+}
+.brand.brand-interactive span.brand-logo {
+  color: inherit;
+}
+.footer-brand .brand-logo {
+  height: 40px;
+  color: var(--ink);
+}
+
+/* The name unfolds beside the mark on hover/focus */
 .brand-more {
   display: inline-block;
   max-width: 0;
   overflow: hidden;
   opacity: 0;
+  font-size: 0.72em;
   letter-spacing: -0.5px;
   font-weight: 700;
-  transform: translateY(6px);
+  transform: translateX(-6px);
   transition:
     max-width 0.45s cubic-bezier(0.2, 0.8, 0.2, 1),
+    margin-left 0.45s cubic-bezier(0.2, 0.8, 0.2, 1),
     opacity 0.3s,
     transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-/* The space between "Russel" and "Santos" opens up with the name */
-.brand-more + .brand-letter {
-  margin-left: 0;
-  transition:
-    transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.3),
-    margin-left 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 /* The dot is a real circle so it can pulse and bounce. */
@@ -139,7 +151,9 @@
   display: inline-block;
   width: 0.2em;
   height: 0.2em;
-  margin-left: 0.06em;
+  margin-left: 0.24em;
+  align-self: flex-end;
+  margin-bottom: 0.18em;
   border-radius: 50%;
   background: var(--blue);
   animation: brand-pulse 2.8s ease-out infinite;
@@ -180,12 +194,10 @@
 /* Hover only where hover exists; keyboard focus works everywhere. */
 @media (hover: hover) {
   .brand.brand-interactive:hover .brand-more {
-    max-width: 3.2em;
+    max-width: 8em;
+    margin-left: 0.5em;
     opacity: 1;
-    transform: translateY(0);
-  }
-  .brand.brand-interactive:hover .brand-more + .brand-letter {
-    margin-left: 0.3em;
+    transform: translateX(0);
   }
   .brand.brand-interactive:hover .brand-dot {
     animation: none;
@@ -196,17 +208,15 @@
     opacity: 1;
     transform: translateY(0);
   }
-  .brand.brand-interactive:hover .brand-letter {
-    transform: translateY(-2px);
+  .brand.brand-interactive:hover .brand-logo {
+    transform: rotate(-6deg) scale(1.08);
   }
 }
 .brand.brand-interactive:focus-visible .brand-more {
-  max-width: 3.2em;
+  max-width: 8em;
+  margin-left: 0.5em;
   opacity: 1;
-  transform: translateY(0);
-}
-.brand.brand-interactive:focus-visible .brand-more + .brand-letter {
-  margin-left: 0.3em;
+  transform: translateX(0);
 }
 .brand.brand-interactive:focus-visible .brand-hint {
   opacity: 1;
@@ -244,10 +254,117 @@
     animation: none;
   }
   .brand-more,
-  .brand-letter,
+  .brand-logo,
   .brand-hint,
   .theme-icon {
     transition: none;
     animation: none;
   }
+}
+
+/* ---- Copy-to-clipboard buttons (email / phone) ------------------- */
+.copy-button {
+  position: relative;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+/* Match the plain-link look these buttons replaced */
+.nav-links button.nav-contact {
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 700;
+  border-bottom: 1px solid currentColor;
+  padding: 0 0 4px;
+  transition: opacity 0.2s;
+}
+.nav-links button.nav-contact:hover {
+  opacity: 0.55;
+}
+button.text-link {
+  font: 700 12px/inherit inherit;
+  font-family: inherit;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+}
+.contact-strip > button {
+  min-width: 0;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 20px 16px;
+  border-right: 1px solid var(--line);
+  font-size: 9px;
+  font-weight: 700;
+  transition: color 0.2s;
+}
+.contact-strip > button:first-child {
+  padding-left: 0;
+}
+.contact-strip > button:hover {
+  color: var(--blue);
+}
+
+/* "Copied" confirmation that pops up over the button */
+.copy-toast {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 6px);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 9px;
+  background: var(--blue);
+  color: #fff;
+  font: 500 10px "DM Mono", monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, 4px);
+  transition:
+    opacity 0.2s,
+    transform 0.25s;
+}
+.copy-button.is-copied .copy-toast {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+/* The toast would sit under the sticky nav bar edge; show it below there instead */
+.nav-links .copy-toast {
+  bottom: auto;
+  top: calc(100% + 8px);
+  transform: translate(-50%, -4px);
+}
+.nav-links .copy-button.is-copied .copy-toast {
+  transform: translate(-50%, 0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .copy-toast {
+    transition: none;
+  }
+}
+
+/* ---- Hero headline: exactly two rows ------------------------------ */
+.hero h1 {
+  max-width: none;
+  /* sized from the viewport so both rows always fit the text column */
+  font-size: clamp(36px, 6.1vw, 80px);
+}
+.hero h1 .hero-line {
+  display: block;
+  white-space: nowrap;
 }
