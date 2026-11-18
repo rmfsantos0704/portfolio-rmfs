@@ -29,6 +29,9 @@ export default function HomePage() {
             <Link className="button primary" to="/projects">
               Explore my work <Icon name="arrow" />
             </Link>
+            <a className="button outline" href="/Russel-Santos-Resume.pdf" download="Russel-Santos-Resume.pdf">
+              Resume <Icon name="download" />
+            </a>
             {profile?.email && (
               <CopyButton className="text-link" text={profile.email} label="Copy email address" copiedLabel="Email copied">
                 Start a conversation

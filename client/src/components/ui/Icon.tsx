@@ -6,6 +6,7 @@ export type IconName =
   | "check"
   | "chevron"
   | "code"
+  | "download"
   | "external"
   | "github"
   | "image"
@@ -39,6 +40,13 @@ const paths: Record<IconName, ReactNode> = {
       <path d="m8 9-4 3 4 3" />
       <path d="m16 9 4 3-4 3" />
       <path d="m14 5-4 14" />
+    </>
+  ),
+  download: (
+    <>
+      <path d="M12 3v12" />
+      <path d="m7 11 5 5 5-5" />
+      <path d="M5 21h14" />
     </>
   ),
   external: (

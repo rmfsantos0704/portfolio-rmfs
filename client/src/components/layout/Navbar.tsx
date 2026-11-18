@@ -27,6 +27,9 @@ export function Navbar() {
             {link.label}
           </NavLink>
         ))}
+        <a className="nav-resume" href="/Russel-Santos-Resume.pdf" download="Russel-Santos-Resume.pdf" onClick={close}>
+          Resume <Icon name="download" size={15} />
+        </a>
         {profile?.email && (
           <CopyButton className="nav-contact" text={profile.email} label="Copy email address" copiedLabel="Email copied">
             Let’s talk <Icon name="arrow" size={17} />

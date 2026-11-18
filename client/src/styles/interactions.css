@@ -368,3 +368,19 @@ button.text-link {
   display: block;
   white-space: nowrap;
 }
+
+/* ---- Resume download ---------------------------------------------- */
+.button.outline {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--ink);
+}
+.button.outline:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+.nav-links a.nav-resume {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
