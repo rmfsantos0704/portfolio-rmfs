@@ -29,7 +29,7 @@ export default function HomePage() {
             <Link className="button primary" to="/projects">
               Explore my work <Icon name="arrow" />
             </Link>
-            <a className="button outline" href="/Russel-Santos-Resume.pdf" download="Russel-Santos-Resume.pdf">
+            <a className="button outline" href="/Russel-Santos-Resume.pdf" target="_blank" rel="noopener noreferrer">
               Resume <Icon name="download" />
             </a>
             {profile?.email && (

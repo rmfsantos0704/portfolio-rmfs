@@ -27,7 +27,7 @@ export function Navbar() {
             {link.label}
           </NavLink>
         ))}
-        <a className="nav-resume" href="/Russel-Santos-Resume.pdf" download="Russel-Santos-Resume.pdf" onClick={close}>
+        <a className="nav-resume" href="/Russel-Santos-Resume.pdf" target="_blank" rel="noopener noreferrer" onClick={close}>
           Resume <Icon name="download" size={15} />
         </a>
         {profile?.email && (
